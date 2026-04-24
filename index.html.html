@@ -1,0 +1,1263 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --saffron:#FF9933;--india-green:#138808;--navy:#000080;
+  --bg:#eef2ff;--card:#fff;--muted:#6b7280;--border:#e5e7eb;
+  --blue:#1d4ed8;--text:#111827;--sub:#374151;--danger:#dc2626;
+  --shadow:0 2px 12px rgba(0,0,80,0.08);
+}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ===== AUTH ===== */
+.auth-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem;background:linear-gradient(145deg,#00006e,#0a1a8a,#0d2db5)}
+.auth-logo{text-align:center;margin-bottom:1.5rem}
+.auth-logo .flag{font-size:44px}
+.auth-logo h1{font-family:'Baloo 2',sans-serif;font-size:26px;font-weight:800;color:#fff;margin-top:6px}
+.auth-logo p{color:#93c5fd;font-size:13px;margin-top:2px;font-style:italic}
+.flag-bar{display:flex;width:100px;height:5px;border-radius:3px;overflow:hidden;margin:8px auto 0}
+.fb{flex:1}
+
+.auth-box{background:#fff;border-radius:18px;width:100%;max-width:390px;padding:1.5rem;box-shadow:0 16px 48px rgba(0,0,64,0.3)}
+.tab-switcher{display:flex;background:#f3f4f6;border-radius:10px;padding:3px;gap:3px;margin-bottom:1.25rem}
+.ts-btn{flex:1;padding:7px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .2s}
+.ts-btn.active{background:#fff;color:var(--navy);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+
+.fg{margin-bottom:0.9rem}
+.fl{display:block;font-size:11px;font-weight:700;color:var(--sub);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
+.fi{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 38px 10px 12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border .2s}
+.fi:focus{border-color:var(--navy)}
+.fi.err{border-color:var(--danger)}
+.fi-wrap{position:relative}
+.fi-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:15px;color:var(--muted)}
+.em{font-size:11px;color:var(--danger);margin-top:3px;display:none}
+.em.show{display:block}
+
+.sbars{display:flex;gap:3px;margin-top:5px}
+.sbar{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background .3s}
+.sbar.w{background:var(--danger)}.sbar.f{background:var(--saffron)}.sbar.s{background:var(--india-green)}
+.slbl{font-size:10px;font-weight:700;margin-top:3px;color:var(--muted)}
+
+.ckrow{display:flex;align-items:flex-start;gap:8px;margin-bottom:0.75rem}
+.ckrow input{margin-top:2px;accent-color:var(--navy);width:14px;height:14px;flex-shrink:0}
+.ckrow label{font-size:12px;color:var(--sub);line-height:1.4;cursor:pointer}
+
+.btn{display:block;width:100%;padding:0.7rem;border:none;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;text-align:center;transition:all .15s;margin-top:0.5rem}
+.btn:disabled{opacity:0.6;cursor:not-allowed}
+.btn-navy{background:var(--navy);color:#fff}.btn-navy:hover:not(:disabled){background:#1a56db}
+.btn-green{background:var(--india-green);color:#fff}.btn-green:hover:not(:disabled){opacity:.9}
+.btn-saffron{background:var(--saffron);color:#fff}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+.btn-ghost{background:#f3f4f6;color:var(--sub);border:none;font-size:13px}
+.btn-g{background:#fff;color:#374151;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px}
+.btn-g:hover{background:#f9fafb}
+
+.or-div{display:flex;align-items:center;gap:8px;margin:.9rem 0;font-size:11px;font-weight:700;color:var(--muted)}
+.or-div::before,.or-div::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-link{text-align:center;font-size:12px;color:var(--muted);margin-top:.9rem}
+.auth-link span{color:var(--navy);font-weight:700;cursor:pointer}
+
+/* OTP */
+.otp-row{display:flex;gap:8px;justify-content:center;margin:.75rem 0}
+.otp-box{width:48px;height:52px;border:1.5px solid var(--border);border-radius:10px;text-align:center;font-size:22px;font-weight:800;color:var(--navy);outline:none;font-family:'Baloo 2',sans-serif;transition:border .2s}
+.otp-box:focus{border-color:var(--navy);background:#eff6ff}
+
+/* SUCCESS */
+.suc-wrap{text-align:center;padding:.5rem 0}
+.suc-icon{font-size:52px;display:block;margin-bottom:10px}
+.suc-title{font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:800;color:var(--india-green)}
+.suc-sub{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.5}
+.bonus-box{background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:.65rem 1rem;margin:1rem 0;font-size:12px;font-weight:700;color:#065f46}
+
+/* SPINNER */
+.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:rot .6s linear infinite;display:inline-block;vertical-align:middle;margin-right:6px}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* ===== APP ===== */
+#page-app{display:none}
+.app-wrap{max-width:680px;margin:0 auto;padding-bottom:2rem}
+
+.topbar{background:var(--navy);padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.tb-brand{display:flex;align-items:center;gap:8px}
+.tb-flag{font-size:20px}
+.tb-title{color:#fff;font-family:'Baloo 2',sans-serif;font-size:16px;font-weight:700}
+.tb-right{display:flex;align-items:center;gap:8px}
+.user-chip{background:rgba(255,255,255,.14);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:20px;max-width:140px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xp-chip{background:var(--saffron);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.top-logout{background:#fff;color:var(--navy);border:none;border-radius:20px;padding:6px 10px;font-size:11px;font-weight:800;font-family:'Nunito',sans-serif;cursor:pointer}
+.top-logout:hover{background:#eff6ff}
+.avatar{width:30px;height:30px;border-radius:50%;background:#e0e7ff;color:var(--navy);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
+.avatar-menu{position:absolute;right:0;top:36px;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow);min-width:160px;z-index:200;overflow:hidden;display:none}
+.avatar-menu.open{display:block}
+.am-item{padding:10px 14px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;color:var(--text)}
+.am-item:hover{background:#f9fafb}
+.am-item.red{color:var(--danger)}
+.am-sep{height:1px;background:var(--border)}
+
+.hero-band{background:linear-gradient(135deg,#0a2463,#1d4ed8);padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+.hb-left h2{color:#fff;font-family:'Baloo 2',sans-serif;font-size:15px;font-weight:700}
+.hb-left p{color:#93c5fd;font-size:12px;margin-top:2px}
+.streak-dots{display:flex;gap:4px}
+.sd{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.sd.done{background:var(--saffron);color:#fff}
+.sd.today{background:#fff;color:var(--navy);border:2px solid var(--saffron)}
+.sd.pend{background:rgba(255,255,255,.15);color:rgba(255,255,255,.4)}
+
+.tabs{display:flex;background:#fff;border-bottom:1.5px solid var(--border);overflow-x:auto}
+.tab{flex:1;min-width:70px;padding:.6rem .2rem;text-align:center;font-size:10px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;text-transform:uppercase;letter-spacing:.3px}
+.tab.on{color:var(--navy);border-bottom-color:var(--saffron)}
+.ti{font-size:15px;display:block;margin-bottom:2px}
+
+.screen{display:none;padding:1rem}
+.screen.on{display:block}
+
+.card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:1rem 1.25rem;margin-bottom:.75rem;box-shadow:var(--shadow)}
+.ch{display:flex;align-items:center;gap:10px;margin-bottom:.75rem}
+.ci{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.ct{font-family:'Baloo 2',sans-serif;font-size:15px;font-weight:700}
+.cs{font-size:12px;color:var(--muted)}
+
+.topic-pill{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:.75rem 1rem;margin-bottom:.75rem}
+.tp-lbl{font-size:10px;color:#1d4ed8;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.tp-name{font-size:15px;font-weight:700;color:#1e3a8a;margin-top:2px}
+.tp-sub{font-size:12px;color:#3b82f6;margin-top:3px}
+
+.sec-title{font-family:'Baloo 2',sans-serif;font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin:.75rem 0 .5rem}
+.divider{height:1px;background:var(--border);margin:.75rem 0}
+.pill{display:inline-flex;align-items:center;background:#fffbeb;border:1px solid #fcd34d;color:#92400e;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px}
+
+.val-card{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #86efac;border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem}
+.val-name{font-family:'Baloo 2',sans-serif;font-size:20px;font-weight:800;color:#14532d}
+.val-desc{font-size:13px;color:#166534;margin-top:4px;line-height:1.5}
+
+.ri{width:100%;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);resize:none;outline:none}
+.ri:focus{border-color:#059669}
+.yn{display:flex;gap:8px;margin-top:8px}
+.yn-b{flex:1;padding:7px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:all .15s}
+.yn-b.y:hover,.yn-b.y.on{background:#dcfce7;border-color:#059669;color:#065f46}
+.yn-b.n:hover,.yn-b.n.on{background:#fee2e2;border-color:#dc2626;color:#991b1b}
+
+.qprog{display:flex;gap:4px;margin-bottom:1rem}
+.qd{flex:1;height:4px;border-radius:2px;background:var(--border)}
+.qd.done{background:var(--saffron)}.qd.curr{background:var(--navy)}
+.qq{font-size:14px;font-weight:700;margin-bottom:1rem;line-height:1.5}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qo{padding:.65rem 1rem;border-radius:10px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;text-align:left;color:var(--text)}
+.qo:hover{border-color:var(--navy);background:#eff6ff}
+.qo.ok{background:#dcfce7;border-color:#059669;color:#065f46}
+.qo.bad{background:#fee2e2;border-color:#dc2626;color:#991b1b}
+.qres{padding:.75rem;border-radius:8px;text-align:center;font-size:13px;font-weight:700;margin-top:.75rem}
+.qres.win{background:#dcfce7;color:#065f46}
+.qres.lose{background:#fee2e2;color:#991b1b}
+
+.xpbar-wrap{background:var(--border);border-radius:10px;height:8px;overflow:hidden;margin:6px 0}
+.xpbar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--saffron),#f59e0b);transition:width .6s}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:.75rem}
+.stat-b{background:#f9fafb;border-radius:10px;border:1px solid var(--border);padding:.6rem;text-align:center}
+.stat-v{font-family:'Baloo 2',sans-serif;font-size:22px;font-weight:800;color:var(--navy)}
+.stat-l{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase}
+.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bc{border-radius:10px;border:1px solid var(--border);padding:.75rem;text-align:center;background:#fff;transition:all .3s}
+.bc.locked{opacity:.4}
+.bc.unlocked{border-color:var(--saffron);background:#fffbeb}
+.bi{font-size:26px;display:block;margin-bottom:4px}
+.bn{font-size:11px;font-weight:700}
+.bp{font-size:10px;color:var(--muted);margin-top:1px}
+.lr{display:flex;align-items:center;gap:10px;padding:.6rem 0;border-bottom:1px solid var(--border)}
+.lr:last-child{border:none}
+.lr-r{font-size:15px;min-width:24px;text-align:center;font-weight:700}
+.lr-n{flex:1;font-size:13px;font-weight:600}
+.lr-p{font-size:12px;font-weight:700;color:var(--saffron)}
+.you-row{background:#fffbeb;border-radius:8px;padding:0 6px}
+.imp-card{border-radius:12px;padding:1rem;margin-bottom:.75rem;display:flex;gap:12px;align-items:flex-start}
+.imp-i{font-size:24px;min-width:36px}
+.imp-t{font-size:13px;font-weight:700;margin-bottom:2px}
+.imp-d{font-size:12px;color:var(--muted);line-height:1.4}
+
+/* AI content box */
+.ai-box{background:#fafafa;border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-size:13px;color:var(--sub);line-height:1.65;margin-bottom:.75rem;min-height:60px;position:relative}
+.ai-tag{font-size:10px;font-weight:700;color:#7c3aed;background:#f5f3ff;border:1px solid #ddd6fe;padding:2px 7px;border-radius:20px;position:absolute;top:8px;right:8px}
+.ai-loading{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+.ai-dots span{animation:blink 1.2s infinite both}
+.ai-dots span:nth-child(2){animation-delay:.2s}
+.ai-dots span:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:0}40%{opacity:1}}
+
+/* Profile modal */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300;display:none;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:90%;max-width:360px;padding:1.25rem;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.modal-title{font-family:'Baloo 2',sans-serif;font-size:17px;font-weight:700;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center}
+.modal-close{font-size:18px;cursor:pointer;color:var(--muted);line-height:1}
+.profile-avatar{width:60px;height:60px;border-radius:50%;background:#e0e7ff;color:var(--navy);font-size:22px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.profile-info{text-align:center}
+.profile-info h3{font-family:'Baloo 2',sans-serif;font-size:17px;font-weight:700}
+.profile-info p{font-size:12px;color:var(--muted);margin-top:2px}
+.profile-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:1rem 0}
+.ps{background:#f9fafb;border-radius:8px;padding:.5rem;text-align:center}
+.ps-v{font-family:'Baloo 2',sans-serif;font-size:18px;font-weight:800;color:var(--navy)}
+.ps-l{font-size:10px;color:var(--muted);font-weight:700}
+.joined-tag{background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:.5rem 1rem;text-align:center;font-size:12px;color:#1d4ed8;font-weight:600;margin-bottom:1rem}
+
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;font-size:12px;font-weight:700;padding:9px 20px;border-radius:20px;opacity:0;transition:opacity .3s;pointer-events:none;z-index:9999;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+#toast.show{opacity:1}
+
+.db-status{display:flex;align-items:center;gap:6px;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.5rem .75rem;margin-bottom:.75rem;font-size:12px;color:#065f46;font-weight:600}
+.db-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.db-red{background:#fef2f2;border-color:#fca5a5;color:var(--danger)}
+.db-red .db-dot{background:var(--danger);animation:none}
+
+.progress-bar-anim{transition:width .8s cubic-bezier(.4,0,.2,1)}
+
+/* notification badge */
+.notif-badge{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--danger);border-radius:50%;border:1.5px solid var(--navy)}
+
+@media (max-width: 768px){
+  .auth-page{padding:1rem .75rem}
+  .auth-box{padding:1.1rem}
+  .screen{padding:.85rem}
+  .card,.val-card,.topic-pill,.imp-card{padding:.9rem}
+  .topbar{
+    align-items:flex-start;
+    gap:.75rem;
+    padding:.8rem;
+  }
+  .tb-brand{
+    flex:1;
+    min-width:0;
+  }
+  .tb-title{font-size:15px}
+  .tb-right{
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    row-gap:6px;
+    max-width:65%;
+  }
+  .user-chip{
+    max-width:110px;
+    font-size:11px;
+  }
+  .hero-band{
+    padding:.9rem 1rem;
+    align-items:flex-start;
+    gap:.85rem;
+    flex-direction:column;
+  }
+  .streak-dots{width:100%;justify-content:flex-start;flex-wrap:wrap}
+  .tabs{scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{
+    min-width:78px;
+    padding:.7rem .35rem;
+  }
+  .stat-grid,
+  .profile-stats{
+    grid-template-columns:repeat(3, 1fr);
+  }
+  .badge-grid{
+    grid-template-columns:repeat(2, 1fr);
+  }
+  .modal{
+    width:calc(100% - 24px);
+    padding:1rem;
+  }
+  #toast{
+    width:calc(100% - 24px);
+    white-space:normal;
+    text-align:center;
+  }
+}
+
+@media (max-width: 480px){
+  .auth-logo .flag{font-size:36px}
+  .auth-logo h1{font-size:22px}
+  .topbar{
+    flex-direction:column;
+    align-items:stretch;
+  }
+  .tb-brand{
+    justify-content:flex-start;
+  }
+  .tb-right{
+    max-width:none;
+    width:100%;
+    justify-content:space-between;
+  }
+  .user-chip{
+    order:1;
+    flex:1 1 100%;
+    max-width:none;
+    text-align:center;
+  }
+  .xp-chip,.top-logout{
+    flex:0 0 auto;
+  }
+  .screen{padding:.75rem}
+  .card,.val-card,.topic-pill,.imp-card{padding:.8rem}
+  .stat-grid,
+  .profile-stats,
+  .badge-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  .imp-card{
+    gap:10px;
+    padding:.85rem;
+  }
+  .modal-title{font-size:16px}
+  .profile-info h3{font-size:16px}
+}
+</style>
+
+<!-- AUTH PAGE -->
+<div id="page-auth">
+  <div class="auth-page">
+    <div class="auth-logo">
+      <div class="flag">🇮🇳</div>
+      <div class="flag-bar"><div class="fb" style="background:#FF9933"></div><div class="fb" style="background:#fff"></div><div class="fb" style="background:#138808"></div></div>
+      <h1>Nation Builder</h1>
+      <p>Learn. Reflect. Act. Grow.</p>
+    </div>
+
+    <div class="auth-box">
+      <div class="tab-switcher">
+        <button class="ts-btn active" id="atab-l" onclick="showForm('login')">Login</button>
+        <button class="ts-btn" id="atab-s" onclick="showForm('signup')">Sign Up</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="frm-login">
+        <div id="login-db-status"></div>
+        <div class="fg">
+          <label class="fl">Email or Mobile</label>
+          <input class="fi" type="text" id="l-contact" placeholder="you@example.com or 9876543210">
+          <div class="em" id="e-l-contact">Enter a valid email or 10-digit mobile.</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Password</label>
+          <div class="fi-wrap">
+            <input class="fi" type="password" id="l-pass" placeholder="Your password">
+            <span class="fi-icon" onclick="tglPass('l-pass',this)">👁</span>
+          </div>
+          <div class="em" id="e-l-pass">Password must be at least 4 characters.</div>
+        </div>
+        <div class="em show" id="e-l-creds" style="display:none;font-size:12px;padding:6px 8px;background:#fef2f2;border-radius:6px;border:1px solid #fca5a5"></div>
+        <div style="text-align:right;margin-bottom:.6rem"><span style="font-size:12px;color:var(--navy);font-weight:700;cursor:pointer" onclick="showForm('forgot')">Forgot password?</span></div>
+        <button class="btn btn-navy" id="btn-login" onclick="doLogin()">Login</button>
+        <div class="or-div">or</div>
+        <button class="btn btn-g" onclick="gLogin()"><svg width="15" height="15" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Continue with Google</button>
+        <div class="auth-link">New here? <span onclick="showForm('signup')">Create account</span></div>
+      </div>
+
+      <!-- SIGNUP -->
+      <div id="frm-signup" style="display:none">
+        <div class="fg">
+          <label class="fl">Full Name</label>
+          <input class="fi" type="text" id="s-name" placeholder="Priya Sharma">
+          <div class="em" id="e-s-name">Please enter your full name.</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Email Address</label>
+          <input class="fi" type="email" id="s-email" placeholder="priya@example.com">
+          <div class="em" id="e-s-email">Enter a valid email address.</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Mobile Number</label>
+          <div class="fi-wrap">
+            <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted);font-weight:700">+91</span>
+            <input class="fi" type="tel" id="s-phone" placeholder="9876543210" style="padding-left:42px" maxlength="10">
+          </div>
+          <div class="em" id="e-s-phone">Enter a valid 10-digit mobile number.</div>
+        </div>
+        <div class="fg">
+          <label class="fl">State</label>
+          <select class="fi" id="s-state">
+            <option value="">Select your state</option>
+            <option>Andhra Pradesh</option><option>Assam</option><option>Bihar</option><option>Delhi</option><option>Gujarat</option><option>Haryana</option><option>Himachal Pradesh</option><option>Jharkhand</option><option>Karnataka</option><option>Kerala</option><option>Madhya Pradesh</option><option>Maharashtra</option><option>Odisha</option><option>Punjab</option><option>Rajasthan</option><option>Tamil Nadu</option><option>Telangana</option><option>Uttar Pradesh</option><option>Uttarakhand</option><option>West Bengal</option>
+          </select>
+          <div class="em" id="e-s-state">Please select your state.</div>
+        </div>
+        <div class="fg">
+          <label class="fl">Password</label>
+          <div class="fi-wrap">
+            <input class="fi" type="password" id="s-pass" placeholder="Create a strong password" oninput="chkStr(this.value)">
+            <span class="fi-icon" onclick="tglPass('s-pass',this)">👁</span>
+          </div>
+          <div class="sbars"><div class="sbar" id="sb1"></div><div class="sbar" id="sb2"></div><div class="sbar" id="sb3"></div></div>
+          <div class="slbl" id="slbl">Enter a password</div>
+          <div class="em" id="e-s-pass">Password must be at least 6 characters.</div>
+        </div>
+        <div class="ckrow">
+          <input type="checkbox" id="s-terms">
+          <label for="s-terms">I agree to the <span style="color:var(--navy);font-weight:700">Terms of Service</span> and <span style="color:var(--navy);font-weight:700">Privacy Policy</span></label>
+        </div>
+        <div class="em" id="e-s-terms">Please accept the terms to continue.</div>
+        <button class="btn btn-green" id="btn-signup" onclick="doSignup()">Create My Account</button>
+        <div class="or-div">or</div>
+        <button class="btn btn-g" onclick="gLogin()"><svg width="15" height="15" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Sign up with Google</button>
+        <div class="auth-link">Have an account? <span onclick="showForm('login')">Login</span></div>
+      </div>
+
+      <!-- FORGOT -->
+      <div id="frm-forgot" style="display:none">
+        <span style="font-size:12px;color:var(--navy);font-weight:700;cursor:pointer;display:inline-block;margin-bottom:.75rem" onclick="showForm('login')">← Back to Login</span>
+        <div id="fp-s1">
+          <p style="font-size:13px;color:var(--sub);margin-bottom:.75rem;line-height:1.5">Enter your registered email or mobile. We'll send an OTP.</p>
+          <div class="fg"><label class="fl">Email or Mobile</label><input class="fi" type="text" id="fp-contact" placeholder="you@example.com"><div class="em" id="e-fp">Enter a valid email or mobile.</div></div>
+          <button class="btn btn-navy" onclick="sendOtp()">Send OTP</button>
+        </div>
+        <div id="fp-s2" style="display:none">
+          <p style="font-size:13px;color:var(--sub);margin-bottom:.5rem">OTP sent! Enter the 4-digit code.</p>
+          <div class="otp-row"><input class="otp-box" type="text" maxlength="1" id="o1" oninput="onxt(this,'o2')"><input class="otp-box" type="text" maxlength="1" id="o2" oninput="onxt(this,'o3')"><input class="otp-box" type="text" maxlength="1" id="o3" oninput="onxt(this,'o4')"><input class="otp-box" type="text" maxlength="1" id="o4" oninput="onxt(this,null)"></div>
+          <p style="font-size:11px;color:var(--muted);text-align:center;margin-bottom:.75rem">Demo: use <strong>1234</strong></p>
+          <button class="btn btn-navy" onclick="verOtp()">Verify OTP</button>
+        </div>
+        <div id="fp-s3" style="display:none">
+          <div class="fg"><label class="fl">New Password</label><div class="fi-wrap"><input class="fi" type="password" id="np"><span class="fi-icon" onclick="tglPass('np',this)">👁</span></div></div>
+          <div class="fg"><label class="fl">Confirm Password</label><input class="fi" type="password" id="cp"><div class="em" id="e-cp">Passwords do not match.</div></div>
+          <button class="btn btn-green" onclick="rstPass()">Reset Password</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div id="frm-success" style="display:none">
+        <div class="suc-wrap">
+          <span class="suc-icon">🎊</span>
+          <div class="suc-title">Welcome aboard!</div>
+          <div class="suc-sub">Your account has been created successfully. Let's start building a better nation together.</div>
+          <div class="bonus-box">🎁 Welcome bonus: +50 XP has been credited to your account!</div>
+          <button class="btn btn-navy" onclick="enterApp()">Enter Nation Builder →</button>
+        </div>
+      </div>
+    </div>
+    <p style="color:rgba(255,255,255,.35);font-size:11px;margin-top:1rem;text-align:center">🔒 Secured · Data stored locally in your browser</p>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="page-app">
+  <div class="app-wrap">
+    <div class="topbar">
+      <div class="tb-brand"><span class="tb-flag">🇮🇳</span><span class="tb-title">Nation Builder</span></div>
+      <div class="tb-right">
+        <span class="user-chip" id="top-user-name">User</span>
+        <span class="xp-chip" id="nav-xp">⚡ 0 XP</span>
+        <button class="top-logout" onclick="logout()">Logout</button>
+        <div class="avatar" id="app-avatar" onclick="openProfile()">
+          A
+          <div class="avatar-menu" id="avatar-menu">
+            <div class="am-item" onclick="openProfile()">👤 My Profile</div>
+            <div class="am-item" onclick="closeMenu();switchTab('rewards')">🏆 My Badges</div>
+            <div class="am-sep"></div>
+            <div class="am-item red" onclick="logout()">🚪 Logout</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-band">
+      <div class="hb-left">
+        <h2 id="app-greeting">Welcome back!</h2>
+        <p id="streak-text">Loading your streak...</p>
+      </div>
+      <div class="streak-dots" id="streak-dots"></div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab on" onclick="switchTab('learn')"><span class="ti">📚</span>Learn</div>
+      <div class="tab" onclick="switchTab('values')"><span class="ti">💚</span>Values</div>
+      <div class="tab" onclick="switchTab('quiz')"><span class="ti">✏️</span>Quiz</div>
+      <div class="tab" onclick="switchTab('rewards')"><span class="ti">🏆</span>Rewards</div>
+      <div class="tab" onclick="switchTab('impact')"><span class="ti">🌟</span>Impact</div>
+    </div>
+
+    <!-- LEARN -->
+    <div class="screen on" id="sc-learn">
+      <div id="db-indicator" class="db-status"><div class="db-dot"></div><span id="db-text">Connecting to database...</span></div>
+      <div class="sec-title">Today's Civic Topic</div>
+      <div class="topic-pill" id="topic-pill">
+        <div class="tp-lbl">⏳ Loading today's topic...</div>
+        <div class="tp-name" id="topic-name">Fetching from database</div>
+        <div class="tp-sub" id="topic-ref">Please wait</div>
+      </div>
+      <div class="card">
+        <div class="ch"><div class="ci" style="background:#eff6ff">📜</div><div><div class="ct" id="learn-title">Loading...</div><div class="cs">~3 min read · 10 XP on completion</div></div></div>
+        <div class="ai-box" id="learn-content">
+          <div class="ai-loading"><div class="ai-dots"><span>●</span><span>●</span><span>●</span></div> AI is generating today's content...</div>
+        </div>
+        <div id="did-you-know" style="display:none;background:#fefce8;border-radius:8px;padding:.6rem;border:1px solid #fde68a;margin-top:.5rem">
+          <p style="font-size:11px;color:#92400e;font-weight:700">💡 Did You Know?</p>
+          <p id="dyk-text" style="font-size:12px;color:#78350f;margin-top:2px;line-height:1.5"></p>
+        </div>
+      </div>
+      <div class="sec-title">Your Journey Today</div>
+      <div class="card">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px"><span id="j-read">⬜</span><div style="flex:1"><p style="font-size:13px;font-weight:700">Read today's topic</p><p style="font-size:11px;color:var(--muted)">+10 XP</p></div><span class="pill">+10 XP</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span id="j-quiz">⬜</span><div style="flex:1"><p style="font-size:13px;font-weight:700">Complete the quiz</p><p style="font-size:11px;color:var(--muted)">+20 XP</p></div><span class="pill">+20 XP</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><span id="j-reflect">⬜</span><div style="flex:1"><p style="font-size:13px;font-weight:700">Daily reflection</p><p style="font-size:11px;color:var(--muted)">+15 XP</p></div><span class="pill">+15 XP</span></div>
+        </div>
+      </div>
+      <button class="btn btn-navy" onclick="switchTab('quiz')">Start Today's Quiz →</button>
+    </div>
+
+    <!-- VALUES -->
+    <div class="screen" id="sc-values">
+      <div class="sec-title">Today's Value</div>
+      <div class="val-card">
+        <div style="font-size:10px;color:#166534;font-weight:700;text-transform:uppercase;letter-spacing:.5px">✨ Value of the Day</div>
+        <div class="val-name" id="val-name">Loading...</div>
+        <div class="val-desc" id="val-desc">Fetching today's value from the database...</div>
+        <div id="val-tags" style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap"></div>
+      </div>
+      <div class="sec-title">AI Insight</div>
+      <div class="ai-box" id="val-ai-insight">
+        <div class="ai-tag">✦ AI</div>
+        <div class="ai-loading"><div class="ai-dots"><span>●</span><span>●</span><span>●</span></div> Generating insight...</div>
+      </div>
+      <div class="sec-title">Daily Reflection</div>
+      <div class="card">
+        <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.75rem">
+          <p style="font-size:12px;font-weight:700;margin-bottom:6px" id="reflect-q">Did you practise today's value?</p>
+          <div class="yn"><button class="yn-b y" onclick="pickYN(this,'yes')">Yes ✓</button><button class="yn-b n" onclick="pickYN(this,'no')">Not yet ✗</button></div>
+        </div>
+        <div style="margin-top:.75rem">
+          <p style="font-size:12px;font-weight:700;margin-bottom:4px">Share your reflection for today:</p>
+          <textarea class="ri" rows="3" id="ref-text" placeholder="What did you do today that reflects this value?"></textarea>
+        </div>
+        <button class="btn btn-green" style="margin-top:10px" id="btn-reflect" onclick="submitReflect()">Submit Reflection (+15 XP)</button>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="screen" id="sc-quiz">
+      <div class="sec-title">Civic Quiz</div>
+      <div class="card" id="quiz-card">
+        <div id="quiz-inner">
+          <div class="ai-loading" style="justify-content:center;padding:1rem 0"><div class="ai-dots"><span>●</span><span>●</span><span>●</span></div> Generating quiz questions with AI...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REWARDS -->
+    <div class="screen" id="sc-rewards">
+      <div class="sec-title">Your Progress</div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <span style="font-size:14px;font-weight:700" id="rank-label">Beginner</span>
+          <span style="font-size:12px;color:var(--muted)" id="xp-label">0 / 200 XP</span>
+        </div>
+        <div class="xpbar-wrap"><div class="xpbar progress-bar-anim" id="xpbar" style="width:0%"></div></div>
+        <p style="font-size:11px;color:var(--muted);margin-top:4px" id="next-badge-hint">Complete activities to earn XP!</p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-b"><div class="stat-v" id="st-xp">0</div><div class="stat-l">Total XP</div></div>
+        <div class="stat-b"><div class="stat-v" id="st-streak">0</div><div class="stat-l">Day Streak</div></div>
+        <div class="stat-b"><div class="stat-v" id="st-badges">0</div><div class="stat-l">Badges</div></div>
+      </div>
+      <div class="sec-title">Badges</div>
+      <div class="badge-grid" id="badge-grid"></div>
+      <div class="sec-title" style="margin-top:1rem">Community Leaderboard</div>
+      <div class="card" style="padding:.75rem 1rem" id="leaderboard"></div>
+    </div>
+
+    <!-- IMPACT -->
+    <div class="screen" id="sc-impact">
+      <div style="text-align:center;padding:.5rem 0 1rem">
+        <div style="display:flex;justify-content:center;gap:0;width:100px;height:5px;border-radius:3px;overflow:hidden;margin:0 auto .75rem"><div style="flex:1;background:#FF9933"></div><div style="flex:1;background:#fff;border:1px solid #e5e7eb"></div><div style="flex:1;background:#138808"></div></div>
+        <p style="font-family:'Baloo 2',sans-serif;font-size:18px;font-weight:800;color:var(--navy)">"Small Daily Steps</p>
+        <p style="font-family:'Baloo 2',sans-serif;font-size:14px;font-weight:700;color:var(--muted)">Strong Character → Strong Nation"</p>
+      </div>
+      <div class="sec-title">Your Impact So Far</div>
+      <div class="ai-box" id="impact-ai" style="margin-bottom:.75rem">
+        <div class="ai-tag">✦ AI</div>
+        <div class="ai-loading"><div class="ai-dots"><span>●</span><span>●</span><span>●</span></div> Personalizing your impact report...</div>
+      </div>
+      <div class="imp-card" style="background:#eff6ff;border:1px solid #bfdbfe"><span class="imp-i">🧠</span><div><div class="imp-t" style="color:#1e3a8a">Aware Citizen</div><div class="imp-d">Reading daily civic topics keeps you informed about your rights, duties, and how India's governance works.</div></div></div>
+      <div class="imp-card" style="background:#f0fdf4;border:1px solid #86efac"><span class="imp-i">💪</span><div><div class="imp-t" style="color:#14532d">Strong Character</div><div class="imp-d">Daily value reflections build discipline, empathy, and a growth mindset — one day at a time.</div></div></div>
+      <div class="imp-card" style="background:#fffbeb;border:1px solid #fcd34d"><span class="imp-i">🤝</span><div><div class="imp-t" style="color:#92400e">Active Participation</div><div class="imp-d">Your actions inspired by today's value create positive ripples in your family, neighbourhood, and community.</div></div></div>
+      <div class="imp-card" style="background:#fdf4ff;border:1px solid #e9d5ff"><span class="imp-i">🌱</span><div><div class="imp-t" style="color:#581c87">Better Society</div><div class="imp-d">Responsible, aware citizens create respectful and inclusive communities — the foundation of democracy.</div></div></div>
+      <div class="card" style="text-align:center;background:linear-gradient(135deg,#fff7ed,#fffbeb)">
+        <div style="font-size:30px;margin-bottom:6px">🇮🇳</div>
+        <div style="font-family:'Baloo 2',sans-serif;font-size:16px;font-weight:800;color:var(--navy)">Jai Hind!</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px">Share your progress with fellow citizens</div>
+        <button class="btn btn-saffron" style="margin-top:10px" onclick="toast('Sharing coming soon!')">Share My Journey 🚀</button>
+        <button class="btn btn-outline" style="margin-top:8px" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="modal-bg" id="profile-modal">
+  <div class="modal">
+    <div class="modal-title">My Profile <span class="modal-close" onclick="closeProfile()">✕</span></div>
+    <div class="profile-avatar" id="prof-avatar">A</div>
+    <div class="profile-info">
+      <h3 id="prof-name">-</h3>
+      <p id="prof-email">-</p>
+      <p id="prof-state" style="font-size:11px;color:var(--muted);margin-top:2px"></p>
+    </div>
+    <div class="joined-tag" id="prof-joined" style="margin-top:.75rem">Joined today</div>
+    <div class="profile-stats">
+      <div class="ps"><div class="ps-v" id="prof-xp">0</div><div class="ps-l">XP</div></div>
+      <div class="ps"><div class="ps-v" id="prof-streak">0</div><div class="ps-l">Streak</div></div>
+      <div class="ps"><div class="ps-v" id="prof-badges">0</div><div class="ps-l">Badges</div></div>
+    </div>
+    <button class="btn btn-outline" onclick="switchTab('rewards'); closeProfile()">View Badges</button>
+    <button class="btn btn-saffron" style="margin-top:8px" onclick="logout()">Logout</button>
+    <button class="btn btn-ghost" onclick="closeProfile()">Close</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ============================================================
+// MYSQL BACKEND - API calls to Node.js server
+// ============================================================
+
+var API_URL = 'http://localhost:3000/api'; // Change if your server is on different port/host
+
+// Token stored in localStorage (just auth token, no user data)
+var DB = {
+  getToken: function(){ return localStorage.getItem('nb_token')||null; },
+  setToken: function(t){ localStorage.setItem('nb_token', t); },
+  delToken: function(){ localStorage.removeItem('nb_token'); },
+};
+
+// Cache for current session user (loaded once from server)
+var _sessionUser = null;
+
+// Helper: API fetch with auth header
+function apiFetch(path, options){
+  options = options || {};
+  options.headers = options.headers || {};
+  options.headers['Content-Type'] = 'application/json';
+  var token = DB.getToken();
+  if(token) options.headers['Authorization'] = 'Bearer ' + token;
+  return fetch(API_URL + path, options).then(function(r){
+    return r.json().then(function(data){ return {ok: r.ok, status: r.status, data: data}; });
+  });
+}
+
+var Backend = {
+
+  register: function(name, email, phone, state, pass){
+    return new Promise(function(res, rej){
+      apiFetch('/register', {
+        method: 'POST',
+        body: JSON.stringify({name:name, email:email, phone:phone, state:state, password:pass})
+      }).then(function(r){
+        if(r.ok){
+          DB.setToken(r.data.token);
+          _sessionUser = r.data.user;
+          res(r.data.user);
+        } else {
+          rej({code: r.data.code||'ERROR', msg: r.data.msg||'Registration failed.'});
+        }
+      }).catch(function(){
+        rej({code:'NETWORK_ERR', msg:'Cannot connect to server. Make sure server.js is running.'});
+      });
+    });
+  },
+
+  login: function(contact, pass){
+    return new Promise(function(res, rej){
+      apiFetch('/login', {
+        method: 'POST',
+        body: JSON.stringify({contact:contact, password:pass})
+      }).then(function(r){
+        if(r.ok){
+          DB.setToken(r.data.token);
+          _sessionUser = r.data.user;
+          res(r.data.user);
+        } else {
+          rej({code: r.data.code||'ERROR', msg: r.data.msg||'Login failed.'});
+        }
+      }).catch(function(){
+        rej({code:'NETWORK_ERR', msg:'Cannot connect to server. Make sure server.js is running.'});
+      });
+    });
+  },
+
+  getSession: function(){
+    return _sessionUser;
+  },
+
+  loadSession: function(){
+    return new Promise(function(res){
+      var token = DB.getToken();
+      if(!token){ res(null); return; }
+      apiFetch('/me').then(function(r){
+        if(r.ok){
+          _sessionUser = r.data.user;
+          res(r.data.user);
+        } else {
+          DB.delToken(); _sessionUser = null; res(null);
+        }
+      }).catch(function(){ res(null); });
+    });
+  },
+
+  addXP: function(amount, reason){
+    return new Promise(function(res){
+      apiFetch('/xp', {
+        method: 'POST',
+        body: JSON.stringify({amount:amount, reason:reason})
+      }).then(function(r){
+        if(r.ok){
+          _sessionUser = r.data.user;
+          // Badge toast
+          var badges = r.data.user.badgesUnlocked||[];
+          if(amount>0 && r.data.xp>=100 && badges.indexOf('aware')>-1 && xp<100) toast('+Badge: Aware Citizen unlocked! 🥈');
+          if(amount>0 && r.data.xp>=200 && badges.indexOf('nation_builder')>-1 && xp<200) toast('+Badge: Nation Builder! 🏆');
+          xp = r.data.xp;
+          res(r.data.xp);
+        } else { res(xp); }
+      }).catch(function(){ res(xp); });
+    });
+  },
+
+  getDailyProgress: function(){
+    // Returns cached progress (loaded async separately)
+    return _dailyProgress || {};
+  },
+
+  setDailyProgress: function(key, val){
+    // Map JS key names to DB column names
+    var keyMap = {
+      'read':'is_read', 'quiz_done':'quiz_done',
+      'reflected':'reflected', 'reflectionText':'reflection_text', 'ynAnswer':'yn_answer'
+    };
+    var dbKey = keyMap[key] || key;
+    if(!_dailyProgress) _dailyProgress = {};
+    _dailyProgress[key] = val;
+    apiFetch('/progress', {
+      method: 'POST',
+      body: JSON.stringify({key: dbKey, value: val})
+    });
+  },
+
+  loadDailyProgress: function(){
+    return apiFetch('/progress').then(function(r){
+      if(r.ok){
+        var p = r.data.progress;
+        _dailyProgress = {
+          read: !!p.is_read, quiz_done: !!p.quiz_done,
+          reflected: !!p.reflected, reflectionText: p.reflection_text,
+          ynAnswer: p.yn_answer
+        };
+      }
+      return _dailyProgress||{};
+    });
+  },
+
+  getLeaderboard: function(){
+    // Returns cached leaderboard
+    return _leaderboard || [];
+  },
+
+  loadLeaderboard: function(){
+    return apiFetch('/leaderboard').then(function(r){
+      if(r.ok){ _leaderboard = r.data.leaderboard; }
+      return _leaderboard||[];
+    });
+  }
+
+};
+
+var _dailyProgress = {};
+var _leaderboard   = [];
+
+// ============================================================
+// CONTENT DATA (cycled by day)
+// ============================================================
+var TOPICS = [
+  {name:"Fundamental Rights", ref:"Articles 12–35 · Part III", title:"Understanding Fundamental Rights", dyk:"Originally 7 rights, the Right to Property was removed in 1978 by the 44th Amendment."},
+  {name:"Directive Principles", ref:"Articles 36–51 · Part IV", title:"Directive Principles of State Policy", dyk:"DPSPs are non-justiciable but fundamental in governance — inspired by Irish Constitution."},
+  {name:"Fundamental Duties", ref:"Article 51A · Part IV-A", title:"Fundamental Duties of Citizens", dyk:"Added in 1976 by the 42nd Amendment, later an 11th duty was added in 2002."},
+  {name:"Preamble of India", ref:"Constitution of India · 1949", title:"The Preamble: Soul of the Constitution", dyk:"The word 'secular' and 'socialist' were added by the 42nd Amendment in 1976."},
+  {name:"Election Commission of India", ref:"Article 324 · Part XV", title:"How India's Elections Work", dyk:"ECI was set up on 25 January 1950, a day before India became a republic."},
+  {name:"Right to Education", ref:"Article 21A · RTE Act 2009", title:"Right to Education in India", dyk:"India became one of 135 countries to make education a fundamental right in 2002."},
+  {name:"Panchayati Raj System", ref:"73rd Amendment · Part IX", title:"Grassroots Democracy: Panchayati Raj", dyk:"73rd Amendment in 1992 gave constitutional status to Panchayati Raj institutions."},
+];
+var VALUES = [
+  {name:"Responsibility", desc:"Own your actions. A responsible citizen keeps promises, meets duties, and contributes to the community.", tags:["Accountability","Duty","Ownership"], q:"Did you complete one pending responsibility today?"},
+  {name:"Honesty", desc:"Speak truth, act with integrity. Honesty builds trust — the foundation of a just society.", tags:["Truth","Integrity","Transparency"], q:"Did you choose honesty over convenience today?"},
+  {name:"Respect", desc:"Treat every person with dignity regardless of caste, religion, or background.", tags:["Dignity","Empathy","Inclusion"], q:"Did you show respect to someone different from you today?"},
+  {name:"Courage", desc:"Stand up for what is right even when it's difficult. Civic courage is the backbone of democracy.", tags:["Bravery","Justice","Voice"], q:"Did you speak up for something right today?"},
+  {name:"Discipline", desc:"Small consistent actions create extraordinary results. Discipline is the bridge between goals and achievement.", tags:["Consistency","Focus","Growth"], q:"Did you follow through on a planned task today?"},
+];
+
+var dayIdx = new Date().getDay();
+var todayTopic = TOPICS[dayIdx % TOPICS.length];
+var todayValue = VALUES[dayIdx % VALUES.length];
+
+// ============================================================
+// APP STATE
+// ============================================================
+var currentUser = null;
+var xp = 0;
+var quizQs = [];
+var currQ = 0, qAnswered = false;
+
+// ============================================================
+// AUTH UI
+// ============================================================
+function showForm(f){
+  ['login','signup','forgot','success'].forEach(function(n){ document.getElementById('frm-'+n).style.display='none'; });
+  document.getElementById('frm-'+f).style.display='block';
+  document.getElementById('atab-l').className='ts-btn'+(f==='login'?' active':'');
+  document.getElementById('atab-s').className='ts-btn'+(f==='signup'?' active':'');
+  clearErrs();
+}
+
+function clearErrs(){
+  document.querySelectorAll('.em').forEach(function(e){e.classList.remove('show');e.style.display='none'});
+  document.querySelectorAll('.fi').forEach(function(i){i.classList.remove('err')});
+}
+function showErr(id, inpId){
+  var e=document.getElementById(id); if(!e)return;
+  e.style.display='block'; e.classList.add('show');
+  if(inpId){ var i=document.getElementById(inpId); if(i)i.classList.add('err'); }
+}
+
+function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())}
+function isPhone(v){return /^[6-9]\d{9}$/.test(v.trim())}
+
+function tglPass(id,icon){ var i=document.getElementById(id); i.type=i.type==='password'?'text':'password'; icon.textContent=i.type==='password'?'👁':'🙈'; }
+function chkStr(v){
+  var s1=document.getElementById('sb1'),s2=document.getElementById('sb2'),s3=document.getElementById('sb3'),lbl=document.getElementById('slbl');
+  [s1,s2,s3].forEach(function(s){s.className='sbar'});
+  if(!v){lbl.textContent='Enter a password';lbl.style.color='var(--muted)';return}
+  var hasUp=/[A-Z]/.test(v), hasDig=/\d/.test(v), hasSym=/[^A-Za-z0-9]/.test(v);
+  if(v.length<6){s1.className='sbar w';lbl.textContent='Too weak';lbl.style.color='var(--danger)'}
+  else if(v.length<10||(!hasUp&&!hasDig)){s1.className='sbar f';s2.className='sbar f';lbl.textContent='Fair';lbl.style.color='var(--saffron)'}
+  else{s1.className='sbar s';s2.className='sbar s';s3.className='sbar s';lbl.textContent='Strong!';lbl.style.color='var(--india-green)'}
+}
+
+function doLogin(){
+  clearErrs();
+  var contact=document.getElementById('l-contact').value.trim();
+  var pass=document.getElementById('l-pass').value;
+  var ok=true;
+  if(!contact||(!isEmail(contact)&&!isPhone(contact))){showErr('e-l-contact','l-contact');ok=false}
+  if(pass.length<4){showErr('e-l-pass','l-pass');ok=false}
+  if(!ok)return;
+  var btn=document.getElementById('btn-login');
+  btn.innerHTML='<span class="spin"></span>Authenticating...'; btn.disabled=true;
+  var ce=document.getElementById('e-l-creds'); ce.style.display='none';
+  Backend.login(contact, pass).then(function(user){
+    btn.innerHTML='Login'; btn.disabled=false;
+    currentUser=user; xp=user.xp;
+    enterApp();
+  }).catch(function(err){
+    btn.innerHTML='Login'; btn.disabled=false;
+    ce.textContent='⚠ '+err.msg; ce.style.display='block'; ce.classList.add('show');
+  });
+}
+
+function doSignup(){
+  clearErrs();
+  var name=document.getElementById('s-name').value.trim();
+  var email=document.getElementById('s-email').value.trim();
+  var phone=document.getElementById('s-phone').value.trim();
+  var state=document.getElementById('s-state').value;
+  var pass=document.getElementById('s-pass').value;
+  var terms=document.getElementById('s-terms').checked;
+  var ok=true;
+  if(!name){showErr('e-s-name','s-name');ok=false}
+  if(!isEmail(email)){showErr('e-s-email','s-email');ok=false}
+  if(!isPhone(phone)){showErr('e-s-phone','s-phone');ok=false}
+  if(!state){showErr('e-s-state','s-state');ok=false}
+  if(pass.length<6){showErr('e-s-pass','s-pass');ok=false}
+  if(!terms){showErr('e-s-terms');ok=false}
+  if(!ok)return;
+  var btn=document.getElementById('btn-signup');
+  btn.innerHTML='<span class="spin"></span>Creating account...'; btn.disabled=true;
+  Backend.register(name,email,phone,state,pass).then(function(user){
+    btn.innerHTML='Create My Account'; btn.disabled=false;
+    currentUser=user; xp=50;
+    document.getElementById('frm-signup').style.display='none';
+    document.getElementById('frm-success').style.display='block';
+  }).catch(function(err){
+    btn.innerHTML='Create My Account'; btn.disabled=false;
+    toast('⚠ '+err.msg);
+    document.getElementById('e-s-email').textContent=err.msg;
+    showErr('e-s-email','s-email');
+  });
+}
+
+function gLogin(){ toast('Google sign-in coming soon!'); }
+
+function sendOtp(){
+  var c=document.getElementById('fp-contact').value.trim();
+  if(!c||(!isEmail(c)&&!isPhone(c))){showErr('e-fp','fp-contact');return}
+  document.getElementById('fp-s1').style.display='none';
+  document.getElementById('fp-s2').style.display='block';
+  toast('OTP sent!');
+}
+function onxt(el,nxt){ if(el.value.length===1&&nxt) document.getElementById(nxt).focus(); }
+function verOtp(){
+  var otp=['o1','o2','o3','o4'].map(function(i){return document.getElementById(i).value}).join('');
+  if(otp==='1234'){document.getElementById('fp-s2').style.display='none';document.getElementById('fp-s3').style.display='block';}
+  else toast('Incorrect OTP. Use 1234.');
+}
+function rstPass(){
+  var p=document.getElementById('np').value,c=document.getElementById('cp').value;
+  if(p!==c){showErr('e-cp','cp');return}
+  if(p.length<6){toast('Too short.');return}
+  toast('Password reset! Please login.'); showForm('login');
+  ['fp-s1','fp-s2','fp-s3'].forEach(function(s,i){document.getElementById(s).style.display=i===0?'block':'none'});
+}
+
+// ============================================================
+// APP
+// ============================================================
+function enterApp(){
+  document.getElementById('page-auth').style.display='none';
+  document.getElementById('page-app').style.display='block';
+  setupApp();
+}
+
+function setupApp(){
+  if(!currentUser) return;
+  xp = currentUser.xp||0;
+  var name = currentUser.name;
+  document.getElementById('top-user-name').textContent = name;
+  var init = name.charAt(0).toUpperCase();
+  document.getElementById('app-avatar').textContent=init;
+  document.getElementById('prof-avatar').textContent=init;
+  var hr = new Date().getHours();
+  var greet = hr<12?'Good Morning':hr<17?'Good Afternoon':'Good Evening';
+  greet = hr<12?'Good Morning, ':hr<17?'Good Afternoon, ':'Good Evening, ';
+  document.getElementById('app-greeting').textContent = greet + name.split(' ')[0] + '! 🌅';
+  var streak = currentUser.streak||1;
+  document.getElementById('streak-text').textContent = 'Day '+streak+' streak — keep going!';
+
+  // Build streak dots
+  var days=['M','T','W','T','F','S','S'];
+  var todayDow = (new Date().getDay()+6)%7;
+  var sd=document.getElementById('streak-dots'); sd.innerHTML='';
+  days.forEach(function(d,i){
+    var div=document.createElement('div');
+    div.className='sd '+(i<todayDow?'done':i===todayDow?'today':'pend');
+    div.textContent=d; sd.appendChild(div);
+  });
+
+  updateXPUI();
+  renderBadges();
+  renderLeaderboard();
+  loadDailyContent();
+  loadQuiz();
+  loadValuesTab();
+  updateJourneyIcons();
+  loadImpactAI();
+
+  // Profile modal
+  document.getElementById('prof-name').textContent=currentUser.name;
+  document.getElementById('prof-email').textContent=currentUser.email;
+  document.getElementById('prof-state').textContent=currentUser.state||'';
+  document.getElementById('prof-joined').textContent='📅 Joined '+currentUser.joinedAt;
+  document.getElementById('prof-xp').textContent=xp;
+  document.getElementById('prof-streak').textContent=streak;
+  document.getElementById('prof-badges').textContent=(currentUser.badgesUnlocked||[]).length;
+
+  // DB status indicator
+  setTimeout(function(){
+    document.getElementById('db-indicator').className='db-status';
+    document.getElementById('db-text').textContent='Database connected to SQL Server';
+  },600);
+}
+
+// ---- LEARN TAB ----
+function loadDailyContent(){
+  document.getElementById('topic-name').textContent=todayTopic.name;
+  document.getElementById('topic-ref').textContent=todayTopic.ref;
+  document.getElementById('learn-title').textContent=todayTopic.title;
+
+  // Call Anthropic API for content
+  var prompt = 'Write a 4-5 sentence educational explanation about "'+todayTopic.name+'" for Indian citizens. Context: '+todayTopic.ref+'. Be concise, informative, and engaging. Use simple language suitable for all ages. End with one practical takeaway for daily life. No markdown, plain text only.';
+  callAI(prompt).then(function(text){
+    document.getElementById('learn-content').innerHTML='<span class="ai-tag">✦ AI</span>'+text;
+    document.getElementById('did-you-know').style.display='block';
+    document.getElementById('dyk-text').textContent=todayTopic.dyk;
+    var prog = Backend.getDailyProgress();
+    if(!prog.read){
+      Backend.setDailyProgress('read',true);
+      Backend.addXP(10,'read_topic').then(function(newXP){
+        xp=newXP; updateXPUI(); updateJourneyIcons();
+        toast('Topic read! +10 XP earned');
+      });
+    }
+  }).catch(function(){
+    document.getElementById('learn-content').innerHTML='<span class="ai-tag">✦ AI</span>'+todayTopic.title+' is an essential aspect of Indian civics. Understanding your constitutional duties and rights helps you become a responsible and informed citizen. Every citizen should be aware of how governance functions to actively participate in democracy. Take time today to read the original Article in the Constitution.';
+    document.getElementById('did-you-know').style.display='block';
+    document.getElementById('dyk-text').textContent=todayTopic.dyk;
+  });
+}
+
+// ---- VALUES TAB ----
+function loadValuesTab(){
+  document.getElementById('val-name').textContent=todayValue.name;
+  document.getElementById('val-desc').textContent=todayValue.desc;
+  document.getElementById('reflect-q').textContent=todayValue.q;
+  var tagsEl=document.getElementById('val-tags'); tagsEl.innerHTML='';
+  todayValue.tags.forEach(function(t){
+    var s=document.createElement('span');
+    s.style.cssText='background:#bbf7d0;color:#14532d;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px';
+    s.textContent=t; tagsEl.appendChild(s);
+  });
+  // AI insight
+  var prompt='Write 2 short sentences explaining how the value of "'+todayValue.name+'" applies to everyday life of an Indian citizen. Be practical and relatable. Plain text, no markdown.';
+  callAI(prompt).then(function(text){
+    document.getElementById('val-ai-insight').innerHTML='<span class="ai-tag">✦ AI</span>'+text;
+  }).catch(function(){
+    document.getElementById('val-ai-insight').innerHTML='<span class="ai-tag">✦ AI</span>'+todayValue.desc;
+  });
+
+  // Pre-fill if already reflected
+  var prog=Backend.getDailyProgress();
+  if(prog.reflected){
+    document.getElementById('ref-text').value=prog.reflectionText||'';
+    document.getElementById('btn-reflect').textContent='Reflection Submitted ✓';
+    document.getElementById('btn-reflect').disabled=true;
+    document.getElementById('btn-reflect').classList.add('btn-ghost');
+  }
+}
+
+// ---- QUIZ TAB ----
+function loadQuiz(){
+  var prog=Backend.getDailyProgress();
+  if(prog.quiz_done){
+    document.getElementById('quiz-inner').innerHTML='<div style="text-align:center;padding:1.5rem 0"><div style="font-size:40px;margin-bottom:8px">✅</div><p style="font-family:\'Baloo 2\',sans-serif;font-size:16px;font-weight:700;color:var(--india-green)">Quiz completed today!</p><p style="font-size:12px;color:var(--muted);margin-top:4px">You scored '+prog.quiz_score+' XP. Come back tomorrow for a new quiz.</p></div>';
+    return;
+  }
+  // Generate quiz with AI
+  var prompt='Generate exactly 4 multiple-choice quiz questions about "'+todayTopic.name+'" for Indian citizens. Respond ONLY with a JSON array, no markdown, no extra text. Format: [{"q":"question","opts":["A","B","C","D"],"ans":0}] where ans is the 0-based index of the correct answer.';
+  callAI(prompt).then(function(text){
+    try{
+      var clean=text.replace(/```json|```/g,'').trim();
+      var start=clean.indexOf('['), end=clean.lastIndexOf(']');
+      if(start>-1&&end>-1) clean=clean.slice(start,end+1);
+      quizQs=JSON.parse(clean);
+      if(!Array.isArray(quizQs)||quizQs.length===0) throw new Error();
+      currQ=0; renderQuizQ();
+    }catch(e){
+      // fallback questions
+      quizQs=[
+        {q:'Which part of the Indian Constitution deals with '+todayTopic.name+'?',opts:['Part I','Part III','Part IV','Part XV'],ans:1},
+        {q:'When was the 42nd Constitutional Amendment passed?',opts:['1950','1966','1976','1984'],ans:2},
+        {q:'Who is considered the "Father of the Indian Constitution"?',opts:['Jawaharlal Nehru','Sardar Patel','B.R. Ambedkar','Rajendra Prasad'],ans:2},
+        {q:'Which article of the Constitution defines Indian citizenship?',opts:['Article 5','Article 12','Article 21','Article 32'],ans:0},
+      ];
+      currQ=0; renderQuizQ();
+    }
+  }).catch(function(){
+    quizQs=[{q:'India became a Republic on:',opts:['15 August 1947','26 January 1950','2 October 1950','26 November 1949'],ans:1},{q:'The Preamble of India begins with:',opts:['We the People','We the Citizens','We the Nation','We the Republic'],ans:0},{q:'Fundamental Rights are in which part?',opts:['Part I','Part II','Part III','Part IV'],ans:2},{q:'Right to Education is Article:',opts:['19','21','21A','32'],ans:2}];
+    currQ=0; renderQuizQ();
+  });
+}
+
+function renderQuizQ(){
+  var qi=document.getElementById('quiz-inner');
+  var data=quizQs[currQ];
+  var progHTML='<div class="qprog">';
+  quizQs.forEach(function(_,i){ progHTML+='<div class="qd'+(i<currQ?' done':i===currQ?' curr':'')+'"></div>'; });
+  progHTML+='</div>';
+  var optsHTML='<div class="qopts">';
+  data.opts.forEach(function(o,i){ optsHTML+='<button class="qo" onclick="answerQ('+i+',this)">'+o+'</button>'; });
+  optsHTML+='</div>';
+  qi.innerHTML=progHTML+'<div class="qq">Q'+(currQ+1)+'. '+data.q+'</div>'+optsHTML+'<div class="qres" id="qres" style="display:none"></div><button class="btn btn-navy" id="qnxt" style="display:none;margin-top:10px" onclick="nextQ()">Next →</button><button class="btn btn-saffron" id="qdone" style="display:none;margin-top:10px" onclick="quizDone()">Claim XP 🎉</button>';
+  qAnswered=false;
+}
+
+function answerQ(i,btn){
+  if(qAnswered)return; qAnswered=true;
+  var data=quizQs[currQ];
+  document.querySelectorAll('.qo')[data.ans].className='qo ok';
+  var res=document.getElementById('qres');
+  if(i===data.ans){res.className='qres win';res.textContent='✓ Correct! +5 XP';Backend.addXP(5,'quiz_correct').then(function(n){xp=n;updateXPUI();});}
+  else{btn.className='qo bad';res.className='qres lose';res.textContent='✗ Incorrect. See the correct answer above.';}
+  res.style.display='block';
+  if(currQ<quizQs.length-1) document.getElementById('qnxt').style.display='block';
+  else document.getElementById('qdone').style.display='block';
+}
+
+function nextQ(){ currQ++; renderQuizQ(); }
+function quizDone(){
+  var totalXP=0;
+  quizQs.forEach(function(){});
+  Backend.setDailyProgress('quiz_done',true);
+  Backend.setDailyProgress('quiz_score',xp);
+  Backend.addXP(5,'quiz_complete').then(function(n){
+    xp=n; updateXPUI(); updateJourneyIcons();
+    toast('Quiz done! Great work!');
+    switchTab('rewards');
+  });
+}
+
+// ---- REFLECT ----
+var ynVal='';
+function pickYN(btn,val){ document.querySelectorAll('.yn-b').forEach(function(b){b.classList.remove('on')}); btn.classList.add('on'); ynVal=val; }
+function submitReflect(){
+  var txt=document.getElementById('ref-text').value.trim();
+  if(!txt){toast('Please write your reflection first!');return}
+  Backend.setDailyProgress('reflected',true);
+  Backend.setDailyProgress('reflectionText',txt);
+  Backend.setDailyProgress('ynAnswer',ynVal);
+  Backend.addXP(15,'reflection').then(function(n){
+    xp=n; updateXPUI(); updateJourneyIcons();
+    document.getElementById('prof-xp').textContent=xp;
+    toast('Reflection saved! +15 XP earned 🌱');
+  });
+  document.getElementById('btn-reflect').textContent='Reflection Submitted ✓';
+  document.getElementById('btn-reflect').disabled=true;
+  document.getElementById('btn-reflect').classList.add('btn-ghost');
+}
+
+// ---- IMPACT AI ----
+function loadImpactAI(){
+  var u=currentUser; if(!u)return;
+  var prompt='Write 2 motivational sentences for an Indian citizen named '+u.name.split(' ')[0]+' who has earned '+xp+' XP on a civic education app called Nation Builder. Reference their progress positively. Plain text only.';
+  callAI(prompt).then(function(text){
+    document.getElementById('impact-ai').innerHTML='<span class="ai-tag">✦ AI</span>'+text;
+  }).catch(function(){
+    document.getElementById('impact-ai').innerHTML='<span class="ai-tag">✦ AI</span>Your dedication to civic learning is making a real difference. Every step you take builds a stronger, more aware nation.';
+  });
+}
+
+// ---- XP & BADGES ----
+function updateXPUI(){
+  document.getElementById('nav-xp').textContent='⚡ '+xp+' XP';
+  document.getElementById('st-xp').textContent=xp;
+  document.getElementById('prof-xp').textContent=xp;
+  var pct=Math.min(100,Math.round(xp/200*100));
+  document.getElementById('xpbar').style.width=pct+'%';
+  document.getElementById('xp-label').textContent=xp+' / 200 XP';
+  var u=Backend.getSession();
+  if(u){ document.getElementById('st-streak').textContent=u.streak||1; }
+  var rank = xp<50?'Newcomer':xp<100?'Beginner':xp<200?'Aware Citizen':'Nation Builder';
+  document.getElementById('rank-label').textContent=rank;
+  var next = xp<50?'50':xp<100?'100':xp<200?'200':'MAX';
+  document.getElementById('next-badge-hint').textContent = xp>=200?'All badges unlocked! You are a Nation Builder 🏆':'Reach '+next+' XP to unlock your next badge';
+  renderBadges();
+}
+
+var BADGES = [
+  {id:'beginner',icon:'🥉',name:'Beginner',pts:'50 XP required'},
+  {id:'aware',icon:'🥈',name:'Aware Citizen',pts:'100 XP required'},
+  {id:'nation_builder',icon:'🏆',name:'Nation Builder',pts:'200 XP required'},
+  {id:'streak7',icon:'🔥',name:'7-Day Streak',pts:'7 day streak'},
+  {id:'reader',icon:'📖',name:'Avid Reader',pts:'Read 10 topics'},
+  {id:'reflector',icon:'💡',name:'Reflector',pts:'7 reflections'},
+];
+function renderBadges(){
+  var u=Backend.getSession(); if(!u)return;
+  var unlocked=u.badgesUnlocked||[];
+  var grid=document.getElementById('badge-grid'); grid.innerHTML='';
+  var cnt=0;
+  BADGES.forEach(function(b){
+    var isUnlocked=unlocked.indexOf(b.id)>-1;
+    if(isUnlocked)cnt++;
+    grid.innerHTML+='<div class="bc '+(isUnlocked?'unlocked':'locked')+'"><span class="bi">'+b.icon+'</span><div class="bn">'+b.name+'</div><div class="bp">'+b.pts+'</div></div>';
+  });
+  document.getElementById('st-badges').textContent=cnt;
+  document.getElementById('prof-badges').textContent=cnt;
+}
+
+function renderLeaderboard(){
+  var lb=document.getElementById('leaderboard');
+  lb.innerHTML='<div class="ai-loading" style="justify-content:center;padding:.5rem 0"><div class="ai-dots"><span>●</span><span>●</span><span>●</span></div> Loading...</div>';
+  Backend.loadLeaderboard().then(function(list){
+    lb.innerHTML='';
+    list.slice(0,7).forEach(function(u,i){
+      var medals=['🥇','🥈','🥉'];
+      var rank=i<3?medals[i]:'<span style="font-size:13px;color:var(--muted)">'+(i+1)+'</span>';
+      var isMe=u.isMe||false;
+      lb.innerHTML+='<div class="lr'+(isMe?' you-row':'')+'"><span class="lr-r">'+rank+'</span><span class="lr-n">'+(u.name.length>16?u.name.slice(0,16)+'…':u.name)+(isMe?' ★':'')+'</span><span class="lr-p">'+u.xp+' XP</span></div>';
+    });
+  });
+}
+
+function updateJourneyIcons(){
+  var prog=Backend.getDailyProgress();
+  document.getElementById('j-read').textContent=prog.read?'✅':'⬜';
+  document.getElementById('j-quiz').textContent=prog.quiz_done?'✅':'⬜';
+  document.getElementById('j-reflect').textContent=prog.reflected?'✅':'⬜';
+}
+
+// ---- NAV ----
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach(function(t){t.className='tab'});
+  document.querySelectorAll('.screen').forEach(function(s){s.className='screen'});
+  var tabs=['learn','values','quiz','rewards','impact'];
+  document.querySelectorAll('.tab')[tabs.indexOf(tab)].className='tab on';
+  document.getElementById('sc-'+tab).className='screen on';
+  if(tab==='rewards'){renderLeaderboard();updateXPUI();}
+}
+
+function tglAvatarMenu(){
+  var m=document.getElementById('avatar-menu');
+  m.classList.toggle('open');
+}
+function closeMenu(){ document.getElementById('avatar-menu').classList.remove('open'); }
+document.addEventListener('click',function(e){ if(!e.target.closest('#app-avatar')) closeMenu(); });
+function openProfile(){ closeMenu(); document.getElementById('profile-modal').classList.add('open'); }
+function closeProfile(){ document.getElementById('profile-modal').classList.remove('open'); }
+
+function logout(){
+  DB.delToken();
+  _sessionUser=null; currentUser=null; xp=0; _dailyProgress={}; _leaderboard=[];
+  document.getElementById('page-app').style.display='none';
+  document.getElementById('page-auth').style.display='block';
+  showForm('login');
+  toast('Logged out. See you tomorrow! 🇮🇳');
+}
+
+// ---- AI API ----
+function callAI(prompt){
+  return fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      messages:[{role:'user',content:prompt}]
+    })
+  }).then(function(r){
+    if(!r.ok) throw new Error('API error');
+    return r.json();
+  }).then(function(d){
+    var text=(d.content||[]).filter(function(b){return b.type==='text'}).map(function(b){return b.text}).join('');
+    if(!text) throw new Error('No text');
+    return text;
+  });
+}
+
+// ---- TOAST ----
+function toast(msg){
+  var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},2800);
+}
+
+// ---- AUTO LOGIN ----
+(function(){
+  var token = DB.getToken();
+  if(!token){ return; } // no token, stay on auth page
+  // Show loading indicator
+  document.getElementById('page-auth').style.display='none';
+  Backend.loadSession().then(function(sess){
+    if(sess){
+      currentUser=sess; xp=sess.xp||0;
+      Backend.loadDailyProgress().then(function(){
+        enterApp();
+      });
+    } else {
+      document.getElementById('page-auth').style.display='block';
+    }
+  });
+})();
+</script>
